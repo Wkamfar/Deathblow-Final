@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using TMPro;
 public class ControllerAssignment : MonoBehaviour // this  script is temporary for testing purposes // add a script later with similar utility + disconnect and reconnect functionality
+
+    // add reselection + ability to connect  new controllers
 {   //add key based character selection, so that we can skip the setup phase
     //
     // rework the selection system later, and add in menus

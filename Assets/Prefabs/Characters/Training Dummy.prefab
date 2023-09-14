@@ -47,6 +47,7 @@ GameObject:
   - component: {fileID: 2377454838522253245}
   - component: {fileID: 3256499836576126720}
   - component: {fileID: 7131253543453238838}
+  - component: {fileID: -8522598911470019185}
   m_Layer: 0
   m_Name: Training Dummy
   m_TagString: Untagged
@@ -96,6 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36281aac7a366e14781a38029ed3eb8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  test: []
 --- !u!114 &2377454838522253242
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,6 +154,18 @@ MonoBehaviour:
   stamina: 0
   vitality: 0
   statPoint: {x: 0, y: 0}
+--- !u!114 &-8522598911470019185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2377454838522253244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea6b16d04987c754b9130182b4b93c86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3183164294734059780
 GameObject:
   m_ObjectHideFlags: 0

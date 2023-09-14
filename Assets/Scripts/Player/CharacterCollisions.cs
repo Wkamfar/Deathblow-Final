@@ -86,18 +86,18 @@ public class CharacterCollisions : MonoBehaviour
         //}
         //if ()
         //Debug.Log("Testing colliders: " + playerColliders[2][0]);
-        CheckPushBoxes(curFrame);
+        CheckCollisionBoxes(curFrame);
     }
-    public void CheckPushBoxes(int curFrame) // make them simple for now // one push box
+    public void CheckCollisionBoxes(int curFrame) // make them simple for now // one push box
     {
         // too many iterations // try to limit it
         List<List<BoxCollider2D>> pushBoxes = new List<List<BoxCollider2D>>();
         for (int i = 0; i < playerHolders.Count; ++i)
         {
             List<BoxCollider2D> playerBoxes = new List<BoxCollider2D>();
-            for (int j = 0; j < playerHolders[i][(int)ColliderType.pushBox].transform.childCount; ++j)
+            for (int j = 0; j < playerHolders[i][(int)ColliderType.collisionBox].transform.childCount; ++j)
             {
-                playerBoxes.Add(playerHolders[i][(int)ColliderType.pushBox].transform.GetChild(j).gameObject.GetComponent<BoxCollider2D>());
+                playerBoxes.Add(playerHolders[i][(int)ColliderType.collisionBox].transform.GetChild(j).gameObject.GetComponent<BoxCollider2D>());
             }
             pushBoxes.Add(playerBoxes);
         }
@@ -109,31 +109,31 @@ public class CharacterCollisions : MonoBehaviour
                 BoxCollider2D col2 = pushBoxes[1][j];
                 if (col1.bounds.Intersects(col2.bounds)) // make different interactions // work more on this later // make it based on stats // rework interactions later // interpolate between colliders
                 {
-                    float p1Speed = players[0].Movements.PlayerVelocity.x; // get the total velocity later if I change the mechanics of this game
-                    float p2Speed = players[1].Movements.PlayerVelocity.x;
-                    if (players[0].Movements.MovingForward && players[1].Movements.MovingForward)
+                    float p1Speed = players[0].movements.PlayerVelocity.x; // get the total velocity later if I change the mechanics of this game
+                    float p2Speed = players[1].movements.PlayerVelocity.x;
+                    if (players[0].movements.MovingForward && players[1].movements.MovingForward)
                     {
                         float xMean = (col1.transform.position.x + col2.transform.position.x) / 2;
-                        float x1 = xMean - players[0].Inputs.Orientation * col1.size.x / 2;
-                        float x2 = xMean - players[1].Inputs.Orientation * col2.size.x / 2;
-                        float y1 = players[0].Movements.PlayerPosition.y;
-                        float y2 = players[1].Movements.PlayerPosition.y;
+                        float x1 = xMean - players[0].inputs.Orientation * col1.size.x / 2;
+                        float x2 = xMean - players[1].inputs.Orientation * col2.size.x / 2;
+                        float y1 = players[0].movements.PlayerPosition.y;
+                        float y2 = players[1].movements.PlayerPosition.y;
 
-                        players[0].Movements.PlayerPosition = new Vector2(x1, y1);
-                        players[1].Movements.PlayerPosition = new Vector2(x2, y2);
+                        players[0].movements.PlayerPosition = new Vector2(x1, y1);
+                        players[1].movements.PlayerPosition = new Vector2(x2, y2);
                     }
-                    else if (players[0].Movements.MovingForward && !players[1].Movements.MovingForward)
+                    else if (players[0].movements.MovingForward && !players[1].movements.MovingForward)
                     {
                         
-                        float x = col2.transform.position.x - players[0].Inputs.Orientation * (col1.size.x / 2 + col2.size.x / 2);
-                        float y = players[0].Movements.PlayerPosition.y;
-                        players[0].Movements.PlayerPosition = new Vector2(x, y);
+                        float x = col2.transform.position.x - players[0].inputs.Orientation * (col1.size.x / 2 + col2.size.x / 2);
+                        float y = players[0].movements.PlayerPosition.y;
+                        players[0].movements.PlayerPosition = new Vector2(x, y);
                     }
-                    else if (!players[0].Movements.MovingForward && players[1].Movements.MovingForward)
+                    else if (!players[0].movements.MovingForward && players[1].movements.MovingForward)
                     {
-                        float x = col1.transform.position.x - players[1].Inputs.Orientation * (col1.size.x / 2 + col2.size.x / 2);
-                        float y = players[1].Movements.PlayerPosition.y;
-                        players[1].Movements.PlayerPosition = new Vector2(x, y);
+                        float x = col1.transform.position.x - players[1].inputs.Orientation * (col1.size.x / 2 + col2.size.x / 2);
+                        float y = players[1].movements.PlayerPosition.y;
+                        players[1].movements.PlayerPosition = new Vector2(x, y);
                     }
                 }
             }
@@ -176,7 +176,7 @@ enum ColliderType
 {
     hitbox = 0,
     hurtbox = 1,
-    pushBox = 2,
+    collisionBox = 2,
     shieldBox = 3,
     parryBox = 4,
     counterBox = 5,

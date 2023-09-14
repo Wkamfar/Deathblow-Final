@@ -4,13 +4,74 @@ using UnityEngine;
 
 public class CharacterAnimations : MonoBehaviour
 {
-    // save the frame by frame animations as states, and then draw the states
-    public void Setup()
-    {
+    // save the frame by frame animations as states, and then draw the states\
+    // make deathblow a cinematic animation
+    //player
+    Player player;
+    GameObject playerModel;
+    GameObject collidersHolder;
+    //animation stats
+    public GameObject curAnimObj { get; private set; }
+    public MoveAnimationScript curAnim { get; private set; }
+    int curAnimFrame; // add some kind of interpolation if you are missing frames
+    public bool animComplete;
 
+
+    public void Setup(Player _player)
+    {
+        player = _player;
+        playerModel = player.playerModel;
+        collidersHolder = player.collidersHolder;
     }
     public void LinkedUpdate(int curFrame, int deltaFrame)
     {
-
+        if (curAnim != null && !animComplete && deltaFrame >= 1)
+        {
+            curAnimFrame += deltaFrame;
+            if (curAnim.loop && curAnimFrame >= curAnim.frames.Count) //this could cause issues with the animation system // look here if there is a problem 
+                curAnimFrame -= curAnim.frames.Count;
+            else if (curAnimFrame >= curAnim.frames.Count)
+            {
+                curAnimFrame = curAnim.frames.Count - 1;
+                animComplete = true;
+            }
+            SetFrame();
+        }
     }
+
+    public void PlayAnimation(GameObject Move) { PlayAnimation(Move.GetComponent<MoveAnimationScript>()); curAnimObj = Move; }
+    public void PlayAnimation(MoveAnimationScript anim)
+    {
+        animComplete = false;
+        curAnim = anim;
+        curAnimFrame = 0;
+        SetFrame();
+    }
+    
+    private void SetFrame()
+    {
+        List<GameObject> frames = curAnim.frames;
+        if (frames[curAnimFrame] != null) 
+        {
+            FrameScript frame = frames[curAnimFrame].GetComponent<FrameScript>();
+            //player model
+            for (int i = playerModel.transform.childCount - 1; i >= 0; --i)
+                Destroy(playerModel.transform.GetChild(i).gameObject);
+            for (int i = 0; i < frame.playerModels.Count; ++i)
+                Instantiate(frame.playerModels[i], playerModel.transform);
+            //colliders // finish this later
+            List<GameObject>[] colliderList = new List<GameObject>[7] { frame.hitboxes, frame.hurtboxes, frame.collisionboxes, frame.shieldboxes, frame.parryboxes, frame.counterboxes, frame.grabboxes };
+            for (int i = 0; i < collidersHolder.transform.childCount; ++i)
+            {
+                if (colliderList[i].Count > 0)
+                {
+                    for (int j = playerModel.transform.childCount - 1; j >= 0; --j)
+                        Destroy(collidersHolder.transform.GetChild(i).GetChild(j).gameObject);
+                    for (int j = 0; j < colliderList[i].Count; ++j)
+                        Instantiate(colliderList[i][j], collidersHolder.transform.GetChild(i));
+                }
+            }
+        }
+    }
+
 }

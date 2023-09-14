@@ -108,8 +108,8 @@ public class PlayManager : MonoBehaviour // make this a frame manager, make it s
         player1.Setup(c1, player2Obj, camController, mapManager);
         player2.Setup(c2, player1Obj, camController, mapManager);
         //DEBUG LINE, SETS COLORS OF PLAYERS
-        player1.playerModel.transform.GetChild(0).GetComponent<MeshRenderer>().material = player1Color;
-        player2.playerModel.transform.GetChild(0).GetComponent<MeshRenderer>().material = player2Color;
+        //player1.playerModel.transform.GetChild(0).GetComponent<MeshRenderer>().material = player1Color; // sprite renderer // no more mesh // also change for animations --> do later
+        //player2.playerModel.transform.GetChild(0).GetComponent<MeshRenderer>().material = player2Color;
         camController.SetPlayers(player1, player2);
         collisions.Setup(player1, player2, frameStates);
 

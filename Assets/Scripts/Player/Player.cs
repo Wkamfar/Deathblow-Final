@@ -8,14 +8,14 @@ public class Player : MonoBehaviour // make a training dummy class that inherits
     //[SerializeField] private GameObject animationManager;
     //[SerializeField] private GameObject actionManager;
     //[SerializeField] private GameObject collisionManager;
-    protected CharacterInputManager inputs;
-    protected CharacterMovement movements;
-    protected CharacterAnimations animations;
-    protected CharacterActions actions;
-    protected CharacterBlock blocks;
+    public CharacterInputManager inputs { get; protected set; }
+    public CharacterMovement movements { get; protected set; }
+    public CharacterAnimations animations { get;  protected set; }
+    public CharacterActions actions { get; protected set; }
+    public CharacterBlock blocks { get; protected set; }
     // 
-    CameraController camController;
-    MapManager mapManager;
+    public CameraController camController { get; private set; }
+    public MapManager mapManager { get; private set; }
     //enemy
     public GameObject enemy;
     //controller
@@ -25,18 +25,36 @@ public class Player : MonoBehaviour // make a training dummy class that inherits
     // 
     public GameObject collidersHolder;
 
-    [SerializeField] int stamina;
-    [SerializeField] int vitality;
+    public int stamina { get; private set; }
+    public int vitality { get; private set; }
     //ADD ACCELERATION
     //ADD DECELERATION
     //ADD GRAVITY
 
-
-    [SerializeField] protected Vector2 statPoint;
-    //compare strength x weight to their strength x weight
-    //make speed when both pushing equal to excess strength x speed // figure out the calculations later
-
-    // make a character class to 
+    //
+    [Header("Animations")] //make json files to do this, just store the reference, idk or make a separate script to do this // make it easy to add characters
+    //idle
+    public GameObject idle;
+    //walk
+    public GameObject enterWalk;
+    public GameObject exitWalk;
+    public GameObject walk;
+    public GameObject enterBackWalk;
+    public GameObject exitBackWalk;
+    public GameObject backWalk;
+    //Run
+    public GameObject enterRun;
+    public GameObject exitRun;
+    public GameObject Run;
+    //crouch
+    public GameObject enterCrouch;
+    public GameObject exitCrouch;
+    public GameObject couch;
+    //dash
+    public GameObject dash;
+    public GameObject backdash;
+    //attack
+    public GameObject heavySlash;
     public virtual void Setup(InputDevice _controller, GameObject _enemy, CameraController _camController, MapManager _mapManager) // later add in the character / other options you have to make
     {
         //set the enemy for input manager so orientation can be determined
@@ -57,7 +75,8 @@ public class Player : MonoBehaviour // make a training dummy class that inherits
         mapManager = _mapManager;
         inputs.Setup(this, controller);
         movements.Setup(this);
-        animations.Setup();
+        animations.Setup(this);
+        //idle test 
         actions.Setup();
     }
     public virtual void LinkedUpdate(int curFrame, int deltaFrame) // add the linked frame rate
@@ -67,34 +86,6 @@ public class Player : MonoBehaviour // make a training dummy class that inherits
         animations.LinkedUpdate(curFrame, deltaFrame);
         actions.LinkedUpdate(curFrame, deltaFrame);
         blocks.LinkedUpdate(curFrame, deltaFrame);
-    }
-    public CharacterInputManager Inputs
-    {
-        get => inputs;
-    }
-    public CharacterMovement Movements
-    {
-        get => movements;
-    }
-    public CameraController CamController
-    {
-        get => camController;
-    }
-    public MapManager MapManager
-    {
-        get => mapManager;
-    }
-    public GameObject PlayerModel
-    {
-        get => playerModel;
-    }
-    public float Stamina
-    {
-        get => stamina;
-    }
-    public float Vitality
-    {
-        get => vitality;
     }
 }
 enum Stats
