@@ -620,6 +620,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   loop: 1
+  entryAnim: {fileID: 4177437452590638101, guid: 37ce279d854d3ee4a965ba5d5fc31747, type: 3}
+  exitAnim: {fileID: 6645560225609295780, guid: ffb442341dd84ff429b83cb6acb7263d, type: 3}
 --- !u!1 &2859629920765007926
 GameObject:
   m_ObjectHideFlags: 0

@@ -1823,6 +1823,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   loop: 1
+  entryAnim: {fileID: 6809836987334355610, guid: 52096d19444ae294591e362b47f0402a, type: 3}
+  exitAnim: {fileID: 1779590753338432604, guid: 9dca5fa5a4d8c834e8e1f4ff32fd2207, type: 3}
 --- !u!1 &5755169540615410821
 GameObject:
   m_ObjectHideFlags: 0

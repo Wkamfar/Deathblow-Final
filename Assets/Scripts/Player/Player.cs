@@ -36,19 +36,11 @@ public class Player : MonoBehaviour // make a training dummy class that inherits
     //idle
     public GameObject idle;
     //walk
-    public GameObject enterWalk;
-    public GameObject exitWalk;
     public GameObject walk;
-    public GameObject enterBackWalk;
-    public GameObject exitBackWalk;
     public GameObject backWalk;
     //Run
-    public GameObject enterRun;
-    public GameObject exitRun;
     public GameObject Run;
     //crouch
-    public GameObject enterCrouch;
-    public GameObject exitCrouch;
     public GameObject couch;
     //dash
     public GameObject dash;

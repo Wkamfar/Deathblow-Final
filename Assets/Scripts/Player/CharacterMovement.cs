@@ -64,21 +64,41 @@ public class CharacterMovement : MonoBehaviour
         if (direction == 6)// add additional logic later // rework later
         {
             playerVelocity = new Vector2(forwardSpeed * orientation, playerVelocity.y);
-            if (animations.curAnimObj != player.walk)
-                animations.PlayAnimation(player.walk);
-            
+            MoveAnimationScript walk = player.walk.GetComponent<MoveAnimationScript>();
+            if (animations.curAnim != walk || (animations.curAnim == walk && animations.animType != 1))
+            {
+                if (animations.animType != 0 && animations.curAnim != walk)
+                    animations.PlayEntryAnimation(player.walk);
+                else if (animations.curAnim == walk && animations.animType == 0 && animations.animComplete)
+                    animations.PlayRootAnimation(player.walk);
+            } 
         }        
         else if (direction == 4)
         {
             playerVelocity = new Vector2(-backwardSpeed * orientation, playerVelocity.y);
-            if (animations.curAnimObj != player.backWalk)
-                animations.PlayAnimation(player.backWalk);
+            MoveAnimationScript backWalk = player.backWalk.GetComponent<MoveAnimationScript>();
+            if (animations.curAnim != backWalk || (animations.curAnim == backWalk && animations.animType != 1))
+            {
+                if (animations.animType != 0 && animations.curAnim != backWalk)
+                    animations.PlayEntryAnimation(player.backWalk);
+                else if (animations.curAnim == backWalk && animations.animType == 0 && animations.animComplete)
+                    animations.PlayRootAnimation(player.backWalk);
+            }
         }     
         else if (direction == 5)
         {
             playerVelocity = new Vector2(0, 0);
-            if (animations.curAnimObj != player.idle)
-                animations.PlayAnimation(player.idle);
+            MoveAnimationScript idle = player.idle.GetComponent<MoveAnimationScript>();
+            if (animations.curAnim != null && animations.curAnim.exitAnim != null && animations.curAnim != idle)
+            {
+                MoveAnimationScript anim = animations.curAnim;
+                if (animations.animType != 2)
+                    animations.PlayExitAnimation(animations.curAnimObj);
+                else if (animations.animType == 2 && animations.animComplete)
+                    animations.PlayRootAnimation(player.idle);
+            }
+            else if (animations.curAnim != idle)
+                animations.PlayRootAnimation(player.idle);
         }   
 
     } // make negative ground force + make ground acceleration
