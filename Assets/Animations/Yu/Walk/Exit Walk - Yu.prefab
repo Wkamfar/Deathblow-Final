@@ -334,15 +334,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frames:
-  - {fileID: 796440674448892707}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   - {fileID: 9170315345723171560}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   loop: 0
+  entryAnim: {fileID: 0}
+  exitAnim: {fileID: 0}
 --- !u!1 &4305435568521484596
 GameObject:
   m_ObjectHideFlags: 0

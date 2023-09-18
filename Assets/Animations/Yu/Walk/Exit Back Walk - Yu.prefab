@@ -282,7 +282,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerModels:
-  - {fileID: 0}
+  - {fileID: 8687010171671432294}
   hitboxes: []
   hurtboxes: []
   collisionboxes: []
@@ -377,6 +377,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   loop: 0
+  entryAnim: {fileID: 0}
+  exitAnim: {fileID: 0}
 --- !u!1 &8687010171671432294
 GameObject:
   m_ObjectHideFlags: 0

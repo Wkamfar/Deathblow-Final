@@ -65,23 +65,23 @@ public class CharacterMovement : MonoBehaviour
         {
             playerVelocity = new Vector2(forwardSpeed * orientation, playerVelocity.y);
             MoveAnimationScript walk = player.walk.GetComponent<MoveAnimationScript>();
-            if (animations.curAnim != walk || (animations.curAnim == walk && animations.animType != 1))
+            if (animations.curAnim != walk)
             {
-                if (animations.animType != 0 && animations.curAnim != walk)
-                    animations.PlayEntryAnimation(player.walk);
-                else if (animations.curAnim == walk && animations.animType == 0 && animations.animComplete)
+                if (animations.curAnimObj != walk.entryAnim)
+                    animations.PlayEntryAnimation(walk.entryAnim, player.walk);  
+                else if (animations.curAnimObj == walk.entryAnim && animations.animComplete)
                     animations.PlayRootAnimation(player.walk);
-            } 
+            }
         }        
         else if (direction == 4)
         {
             playerVelocity = new Vector2(-backwardSpeed * orientation, playerVelocity.y);
             MoveAnimationScript backWalk = player.backWalk.GetComponent<MoveAnimationScript>();
-            if (animations.curAnim != backWalk || (animations.curAnim == backWalk && animations.animType != 1))
+            if (animations.curAnim != backWalk)
             {
-                if (animations.animType != 0 && animations.curAnim != backWalk)
-                    animations.PlayEntryAnimation(player.backWalk);
-                else if (animations.curAnim == backWalk && animations.animType == 0 && animations.animComplete)
+                if (animations.curAnimObj != backWalk.entryAnim)
+                    animations.PlayEntryAnimation(backWalk.entryAnim, player.walk);
+                else if (animations.curAnimObj == backWalk.entryAnim && animations.animComplete)
                     animations.PlayRootAnimation(player.backWalk);
             }
         }     
@@ -89,7 +89,7 @@ public class CharacterMovement : MonoBehaviour
         {
             playerVelocity = new Vector2(0, 0);
             MoveAnimationScript idle = player.idle.GetComponent<MoveAnimationScript>();
-            if (animations.curAnim != null && animations.curAnim.exitAnim != null && animations.curAnim != idle)
+            /*if (animations.curAnim != null && animations.curAnim.exitAnim != null && animations.curAnim != idle)
             {
                 MoveAnimationScript anim = animations.curAnim;
                 if (animations.animType != 2)
@@ -98,7 +98,21 @@ public class CharacterMovement : MonoBehaviour
                     animations.PlayRootAnimation(player.idle);
             }
             else if (animations.curAnim != idle)
-                animations.PlayRootAnimation(player.idle);
+                animations.PlayRootAnimation(player.idle);*/
+            if (animations.curAnim != idle)
+            {
+                if (animations.rootAnim != null && animations.rootAnim.exitAnim != null)
+                {
+                    GameObject rootObj = animations.rootAnimObj;
+                    MoveAnimationScript root = animations.rootAnim;
+                    if (animations.curAnimObj != root.exitAnim)
+                        animations.PlayExitAnimation(root.exitAnim, rootObj);
+                    else if (animations.curAnimObj == root.exitAnim && animations.animComplete)
+                        animations.PlayRootAnimation(player.idle);
+                }
+                else
+                    animations.PlayRootAnimation(player.idle);
+            }
         }   
 
     } // make negative ground force + make ground acceleration

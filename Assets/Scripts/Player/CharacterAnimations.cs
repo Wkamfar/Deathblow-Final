@@ -11,7 +11,9 @@ public class CharacterAnimations : MonoBehaviour
     GameObject playerModel;
     GameObject collidersHolder;
     //animation stats
-    public int animType;
+    //root anim
+    public GameObject rootAnimObj { get; private set; }
+    public MoveAnimationScript rootAnim { get; private set; }
     //cur Anim
     public GameObject curAnimObj { get; private set; }
     public MoveAnimationScript curAnim { get; private set; }
@@ -41,32 +43,32 @@ public class CharacterAnimations : MonoBehaviour
         }
     }
 
-    public void PlayRootAnimation(GameObject Move) { PlayRootAnimation(Move.GetComponent<MoveAnimationScript>()); curAnimObj = Move; } // make it so you can play entry, root, or exit frames
+    public void PlayRootAnimation(GameObject Move) { PlayRootAnimation(Move.GetComponent<MoveAnimationScript>()); curAnimObj = Move; rootAnimObj = Move; } // make it so you can play entry, root, or exit frames
     public void PlayRootAnimation(MoveAnimationScript anim) // change this to playing the root animation vs entry vs exit animation 
     {
         animComplete = false;
+        rootAnim = anim; // this system might be more confusing
         curAnim = anim;
         curAnimFrame = 0;
-        animType = 1;
         SetFrame(curAnim.frames);
     }
-    public void PlayEntryAnimation(GameObject Move) { PlayEntryAnimation(Move.GetComponent<MoveAnimationScript>()); curAnimObj = Move; } //make this simple for now (change this later)
-    public void PlayEntryAnimation(MoveAnimationScript anim)  
+    public void PlayEntryAnimation(GameObject Move, GameObject Root) { PlayEntryAnimation(Move.GetComponent<MoveAnimationScript>(), Root.GetComponent<MoveAnimationScript>()); curAnimObj = Move; rootAnimObj = Root; } //make this simple for now (change this later)
+    public void PlayEntryAnimation(MoveAnimationScript anim, MoveAnimationScript root)  
     {
         animComplete = false;
+        rootAnim = root;
         curAnim = anim;
         curAnimFrame = 0;
-        animType = 0;
-        SetFrame(curAnim.entryAnim.GetComponent<MoveAnimationScript>().frames); // curAnim.entryFrames
+        SetFrame(curAnim.frames); // curAnim.entryFrames
     }
-    public void PlayExitAnimation(GameObject Move) { PlayExitAnimation(Move.GetComponent<MoveAnimationScript>()); curAnimObj = Move; } 
-    public void PlayExitAnimation(MoveAnimationScript anim) 
+    public void PlayExitAnimation(GameObject Move, GameObject Root) { PlayExitAnimation(Move.GetComponent<MoveAnimationScript>(), Root.GetComponent<MoveAnimationScript>()); curAnimObj = Move; rootAnimObj = Root; } 
+    public void PlayExitAnimation(MoveAnimationScript anim, MoveAnimationScript root) 
     {
         animComplete = false;
+        rootAnim = root;
         curAnim = anim;
         curAnimFrame = 0;
-        animType = 2;
-        SetFrame(curAnim.exitAnim.GetComponent<MoveAnimationScript>().frames); // curAnim.exitFrames
+        SetFrame(curAnim.frames); // curAnim.exitFrames
     }
 
     private void SetFrame(List<GameObject> frames)
@@ -94,11 +96,4 @@ public class CharacterAnimations : MonoBehaviour
         }
     }
 
-}
-
-public enum AnimSequence
-{
-    entry = 0,
-    root = 1,
-    exit = 2
 }
